@@ -47,9 +47,9 @@ io.on('connection', (socket) => {
 
     socket.emit('file:refresh')
 
-    // socket.on('file:change', async ({ path, content }) => {
-    //     await fs.writeFile(`./user${path}`, content)
-    // })
+    socket.on('file:change', async ({ path, content }) => {
+        await fs.writeFile(`./user${path}`, content)
+    })
 
     socket.on('terminal:write', (data) => {
         console.log('Term', data)
@@ -63,6 +63,12 @@ app.get('/files', async (req, res) => {
     return res.json({ tree: fileTree })
 });
 
+
+app.get('/files/content', async (req, res) => {
+    const path = req.query.path;
+    const content = await fs.readFile(`./user${path}`, 'utf-8')
+    return res.json({ content })
+})
 
 async function genrateFileTree(directory) {
     const tree = {};

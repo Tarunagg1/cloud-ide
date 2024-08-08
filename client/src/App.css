@@ -24,6 +24,10 @@ li {
   line-height: 20px;
 }
 
+.files {
+  padding: 20px;
+}
+
 .file-node {
   background-color: lightyellow;
   border-radius: 10px;
